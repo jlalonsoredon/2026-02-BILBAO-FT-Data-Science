@@ -29,6 +29,8 @@ def main():
     print("Turno del jugador: Dispara a coordenadas del enemigo")
     print("Las máquinas disparan aleatoriamente a tu tablero\n")
     
+
+    
     # Fin del juego
     ganador = turn_manager.get_winner()
     print(f"\n¡¡¡GAME OVER!!!")

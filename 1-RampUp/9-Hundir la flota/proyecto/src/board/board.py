@@ -18,7 +18,7 @@ class Board:
         tablero[1:, 0] = list(string.ascii_uppercase[:self.size])
 
         # casillas vacías
-        tablero[1:, 1:] = grafics["pc_table_empty"]
+        tablero[1:, 1:] = 0
 
         return tablero
 
