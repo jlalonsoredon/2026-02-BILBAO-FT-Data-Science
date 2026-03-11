@@ -23,17 +23,6 @@ num_barcos = {
     "ship1" : 4
 }
 
-grafics = {
-"my_table_empty" : "⬜",
-"my_table_ship4" : "⛴️",
-"my_table_ship3" : "🚢",
-"my_table-ship2" : "🛥️",
-"my_table_ship1"  : "🚤",
-"pc_table_empty" : "🟩",
-"pc_table_water" : "🌊",
-"pc_table_boom" : "💥",
-}
-
 GRAFICS = {
     0: "🟩",
     1 : "🚤",
