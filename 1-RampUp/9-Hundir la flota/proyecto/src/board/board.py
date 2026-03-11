@@ -57,7 +57,7 @@ class Board:
 
         # números
         header_numbers = " ".join(f"{i:>3}" for i in range(1, size+1))
-        header_row = "    " + header_numbers
+        header_row = "   " + header_numbers
         print(header_row + "     " + header_row)
 
         # filas
