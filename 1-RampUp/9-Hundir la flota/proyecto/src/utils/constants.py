@@ -24,7 +24,7 @@ num_barcos = {
 }
 
 grafics = {
-"my_table_empty" : "🟦",
+"my_table_empty" : "⬜",
 "my_table_ship4" : "⛴️",
 "my_table_ship3" : "🚢",
 "my_table-ship2" : "🛥️",
@@ -35,7 +35,7 @@ grafics = {
 }
 
 GRAFICS = {
-    0: "🟦",
+    0: "🟩",
     1 : "🚤",
     2 : "🛥️",
     3 : "🚢",
