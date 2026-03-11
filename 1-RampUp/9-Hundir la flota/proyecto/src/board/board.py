@@ -1,6 +1,8 @@
 import numpy as np
 import string
-from ..utils.constants import grafics
+from ..utils.constants import GRAFICS
+import src.utils.helpers as helpers
+from ..utils.constants import HEADER
 
 class Board:
 
@@ -9,15 +11,16 @@ class Board:
         self.grid = self._crear_tablero()
 
     def _crear_tablero(self):
-        tablero = np.full((self.size + 1, self.size + 1), "0")
+        # Inicializar matriz de enteros
+        tablero = np.zeros((self.size + 1, self.size + 1), dtype=object)
 
-        # coordenadas horizontales
+        # coordenadas horizontales (números como strings)
         tablero[0, 1:] = [f"{i:2}" for i in range(1, self.size + 1)]
 
-        # coordenadas verticales
+        # coordenadas verticales (letras)
         tablero[1:, 0] = list(string.ascii_uppercase[:self.size])
 
-        # casillas vacías
+        # casillas vacías (números enteros)
         tablero[1:, 1:] = 0
 
         return tablero
@@ -36,20 +39,26 @@ class Board:
             print(f"{letra} ", end="")
 
             for celda in fila:
-                print(f" {celda}", end="")
+                # Convertir el valor numérico a emoji usando GRAFICS
+                try:
+                    emoji = GRAFICS[int(celda)]
+                except (ValueError, KeyError):
+                    emoji = str(celda)
+                print(f" {emoji}", end="")
 
             print()
     
     @staticmethod
     def mostrar_dos_tableros(tablero1, tablero2, size=10):
-
+        helpers.limpiar_consola()
+        print(HEADER)
         # cabecera
         print("   TU TABLERO".ljust(60) + "TABLERO DISPAROS")
 
         # números
         header_numbers = " ".join(f"{i:>3}" for i in range(1, size+1))
-        header = "     " + header_numbers
-        print(header + "     " + header)
+        header_row = "    " + header_numbers
+        print(header_row + "     " + header_row)
 
         # filas
         for i in range(size):
@@ -59,10 +68,11 @@ class Board:
             # Si es solo datos (10x10), accede a tablero[i]
             fila_index = i + 1 if tablero1.shape[0] == 11 else i
             
-            fila1 = "".join(f"{celda:>3}" for celda in tablero1[fila_index])
-            fila2 = "".join(f"{celda:>3}" for celda in tablero2[fila_index])
 
-            print(f" {fila1}      {fila2}")
+            fila1 = "".join(f"{GRAFICS.get(int(celda), str(celda)):>3}" for celda in tablero1[fila_index][1:])
+            fila2 = "".join(f"{GRAFICS.get(int(celda), str(celda)):>3}" for celda in tablero2[fila_index][1:])
+
+            print(f" {letra} {fila1}     {letra} {fila2}")
     
     def disparar(self, row, col):
         """
@@ -75,27 +85,29 @@ class Board:
         matriz_col = col + 1
         
         # Verificar si ya se disparó aquí
-        celda_actual = self.grid[matriz_row, matriz_col]
-        if celda_actual in [grafics["pc_table_boom"], grafics["pc_table_water"]]:  # Ya disparado
+        celda_actual = int(self.grid[matriz_row, matriz_col])
+        if celda_actual in [6, 5]:  # Ya disparado (impacto o agua)
             print("Ya disparaste aquí!")
             return None
         
         # Comprobar si hay barco (tu tabla tiene lo que necesites)
         # Asumiendo que un barco es cualquier cosa que no sea vacío
-        if celda_actual != grafics["pc_table_empty"]:  # Hay barco
-            self.grid[matriz_row, matriz_col] = grafics["pc_table_boom"]  # Marcar impacto
+        if celda_actual != 0:  # Hay barco
+            self.grid[matriz_row, matriz_col] = 6  # Marcar impacto
             return True
         else:
-            self.grid[matriz_row, matriz_col] = grafics["pc_table_water"]  # Marcar agua
+            self.grid[matriz_row, matriz_col] = 5  # Marcar agua
             return False
     
     def have_ships(self):
         """Comprueba si aún hay barcos sin hundir"""
-        return np.any(self.grid == grafics["my_table_ship4"])
+        # Buscar cualquier celda con valor de barco (1-4)
+        return np.any((self.grid >= 1) & (self.grid <= 4))
 
     def get_ship_count(self):
         """Devuelve el número de células de barco restantes"""
-        return np.sum(self.grid == grafics["my_table_ship4"])
+        # Contar celdas con valores 1-4 (barcos)
+        return np.sum((self.grid >= 1) & (self.grid <= 4))
     
 def validar_coordenadas(coordenadas):
     """Valida que las coordenadas ingresadas sean correctas (ej: A5)"""

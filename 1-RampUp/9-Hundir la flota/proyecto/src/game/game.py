@@ -1,41 +1,27 @@
 '''
 Este módulo contiene la logica principal del juego
 '''
-def obtener_coordenadas_usuario():
-    """Solicita al usuario que ingrese coordenadas y las valida"""
+from . import turn
+import time
+
+def mecanica_juego(table_pc, table_user):
+    # Aquí se implementará la lógica principal del juego, como el bucle de turnos, la verificación de ganadores, etc.
     while True:
-        try:
-            coordenadas_disparo = input("Introduce las coordenada (ej: A5): ").upper().strip()
-            coordenadas = validar_coordenadas(coordenadas_disparo) # Convertir a índices
-            print(f"Disparando a {coordenadas}...")
-            #guarda las coordernadas en la posicion del tablero
-            
-            #coord_matriz = coord_a_indices(coordenadas)
-            #print (f"coordenadas: {coord_matriz}")
-            return coordenadas
-        except ValueError as e:
-            print(e)
+        continue_user = True
+        while continue_user == True:
+            # Turno del jugador
+            print("\nTurno del jugador: Dispara a coordenadas del enemigo")
+            coordenadas_usuario = turn.obtener_coordenadas_usuario(table_pc)
+            # Aquí se debería verificar si el disparo fue un acierto o un fallo, actualizar el tablero, etc.
+            continue_user = turn.comprobar_acierto(table_pc, coordenadas_usuario)
+            table_user.mostrar_dos_tableros(table_user.grid, table_pc.grid)
+        
+        continue_pc = True
+        while continue_pc == True:
+            # Turno de la máquina
+            print("\nTurno de la máquina: Dispara aleatoriamente a tu tablero")
+            time.sleep(2)  # Simular tiempo de pensamiento de la máquina
+            coordenadas_maquina = turn.disparar_a_maquina(table_user)    
+            continue_pc = turn.comprobar_acierto(table_user, coordenadas_maquina)
+            table_pc.mostrar_dos_tableros(table_user.grid, table_pc.grid)
     
-
-def validar_coordenadas(coordenadas):
-    """Valida el formato de las coordenadas ingresadas por el usuario"""
-    if len(coordenadas) < 2:
-        raise ValueError("Formato inválido. Usa letra+número (ej: A5)")
-    
-    fila = ord(coordenadas[0]) - ord('A')  # Convertir letra a índice (A=0, B=1, etc)
-    col = int(coordenadas[1:])  # Convertir número a índice (1=0, 2=1, etc)
-    fila += 1  # Ajustar fila para que coincida con el tablero (A=1, B=2, etc)
-    if not (0 <= fila <= 10 and 0 <= col <= 10): #si las coordenas no son correctas
-        raise ValueError("Coordenadas fuera del rango. Usa A-J y 1-10")
-    # las coordenadas del tablero son distintas de 0, 
-    # es que ese disparo ya se ha realizado y deberia pedir al usuario que ingrese otras coordenadas
-    if tablero_pc.grid[fila, col] != 0:
-        raise ValueError("Ya disparaste aquí! Introduce otras coordenadas.")
-    return fila, col
-
-def coord_a_indices(coord):
-
-    fila = ord(coord[0].upper()) - ord("A")
-    col = int(coord[1:]) - 1
-
-    return fila, col
