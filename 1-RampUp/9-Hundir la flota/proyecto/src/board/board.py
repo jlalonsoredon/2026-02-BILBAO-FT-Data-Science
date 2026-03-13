@@ -1,6 +1,9 @@
 import numpy as np
 import string
 from ..utils.constants import GRAFICS
+from ..utils.constants import NUM_SHIPS
+from ..utils.constants import SIZE_SHIPS
+from ..game.ship import Ship
 import src.utils.helpers as helpers
 from ..utils.constants import HEADER
 
@@ -22,31 +25,44 @@ class Board:
 
         # casillas vacías (números enteros)
         tablero[1:, 1:] = 0
-
+        
         return tablero
-
-    def mostrar(self):
-
-        # imprimir cabecera de números
-        print("   ", end="")
-        for i in range(1, self.size + 1):
-            print(f"{i:>3}", end="")
-        print()
-
-        # imprimir filas
-        for i, fila in enumerate(self.grid[1:, 1:]):
-            letra = self.grid[i + 1, 0]
-            print(f"{letra} ", end="")
-
-            for celda in fila:
-                # Convertir el valor numérico a emoji usando GRAFICS
-                try:
-                    emoji = GRAFICS[int(celda)]
-                except (ValueError, KeyError):
-                    emoji = str(celda)
-                print(f" {emoji}", end="")
-
-            print()
+    
+    def put_ships(self, tablero_user, tablero_pc):
+        # Colocar barcos automáticamente para el usuario
+        for ship in NUM_SHIPS:
+            for _ in range(NUM_SHIPS[ship]):
+                nuevo_barco = Ship(ship, SIZE_SHIPS[ship], tablero_user)
+                print(f"Coloca tu {nuevo_barco}")
+                nuevo_barco.generate_random_position(tablero_user)
+                print(f"{nuevo_barco} colocado en {nuevo_barco.position}")
+                for (fila, col) in nuevo_barco.position:
+                    tablero_user[fila, col] = SIZE_SHIPS[ship]  # Marcar la posición del barco con su tamaño
+                self.mostrar_dos_tableros(tablero_user, tablero_pc)  # Mostrar el tablero después de colocar cada barco
+        return tablero_user
+    
+    def put_ships_manual(self, tablero_user, tablero_pc):
+        # Colocar barcos manualmente para el usuario
+        for ship in NUM_SHIPS:
+            for _ in range(NUM_SHIPS[ship]):
+                nuevo_barco = Ship(ship, SIZE_SHIPS[ship], tablero_user)
+                print(f"\nColoca tu {nuevo_barco}")
+                nuevo_barco.place(nuevo_barco.position, tablero_user)
+                print(f"{nuevo_barco} colocado en {nuevo_barco.position}")
+                for (fila, col) in nuevo_barco.position:
+                    tablero_user[fila, col] = SIZE_SHIPS[ship]  # Marcar la posición del barco con su tamaño
+                self.mostrar_dos_tableros(tablero_user, tablero_pc)  # Mostrar el tablero después de colocar cada barco
+        return tablero_user
+    
+    def put_ships_pc(self, tablero_pc):
+        # Colocar barcos automáticamente para la PC
+        for ship in NUM_SHIPS:
+            for _ in range(NUM_SHIPS[ship]):
+                nuevo_barco = Ship(ship, SIZE_SHIPS[ship], tablero_pc)
+                nuevo_barco.generate_random_position(tablero_pc)
+                for (fila, col) in nuevo_barco.position:
+                    tablero_pc[fila, col] = SIZE_SHIPS[ship]  # Marcar la posición del barco con su tamaño
+        return tablero_pc
     
     @staticmethod
     def mostrar_dos_tableros(tablero1, tablero2, size=10):
@@ -60,17 +76,27 @@ class Board:
         header_row = "   " + header_numbers
         print(header_row + "     " + header_row)
 
+        # Crear una copia de tablero2 con barcos ocultos
+        import numpy as np
+        tablero2_oculto = tablero2.copy()
+        # Reemplazar barcos (1-4) con 0 (vacío)
+        for i in range(tablero2_oculto.shape[0]):
+            for j in range(tablero2_oculto.shape[1]):
+                # Solo reemplazar si es un número entero entre 1 y 4
+                if isinstance(tablero2_oculto[i, j], (int, np.integer)) and 1 <= tablero2_oculto[i, j] <= 4:
+                    tablero2_oculto[i, j] = 0
+
         # filas
         for i in range(size):
+            #imprime el eje de coordenadas alfabético (A, B, C a J)
             letra = chr(ord("A") + i)
             
             # Si el tablero tiene encabezado (11x11), accede a tablero[i+1]
             # Si es solo datos (10x10), accede a tablero[i]
             fila_index = i + 1 if tablero1.shape[0] == 11 else i
-            
-
+            # Para cada celda en la fila, mostrar el gráfico correspondiente o el número si no hay gráfico definido en GRAFICS
             fila1 = "".join(f"{GRAFICS.get(int(celda), str(celda)):>3}" for celda in tablero1[fila_index][1:])
-            fila2 = "".join(f"{GRAFICS.get(int(celda), str(celda)):>3}" for celda in tablero2[fila_index][1:])
+            fila2 = "".join(f"{GRAFICS.get(int(celda), str(celda)):>3}" for celda in tablero2_oculto[fila_index][1:])
 
             print(f" {letra} {fila1}     {letra} {fila2}")
     
@@ -122,7 +148,7 @@ def validar_coordenadas(coordenadas):
     
     fila_index = ord(fila) - ord('A')
     col_index = int(col) - 1
-    print(f"Coordenadas convertidas a índices: ({fila_index}, {col_index})")
+    #print(f"Coordenadas convertidas a índices: ({fila_index}, {col_index})")
     if not (0 <= fila_index <= 10 and 0 <= col_index <= 10):
         raise ValueError("Coordenadas fuera del rango. Usa A-J y 1-10")
     

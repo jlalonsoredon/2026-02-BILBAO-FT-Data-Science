@@ -10,7 +10,7 @@ def disparar_a_maquina(table_user):
             fila = random.randint(1, 10)
             col = random.randint(1, 10)
             # Validar que no se haya disparado en este lugar antes
-            if table_user.grid[fila, col] == 5 or table_user.grid[fila, col] == 6:
+            if table_user[fila, col] == 5 or table_user[fila, col] == 6:
                 continue  # Intentar con otras coordenadas
             coordenadas = (fila, col)
             print(f"Disparando a {coordenadas}...")
@@ -43,19 +43,19 @@ def validar_coordenadas(coordenadas, table):
     # las coordenadas del tablero son distintas de 0, 
     # es que ese disparo ya se ha realizado y deberia pedir al usuario que ingrese otras coordenadas
     print(f"Coordenadas convertidas a índices: ({fila}, {col})")
-    print(f"Valor en el tablero de la máquina en esas coordenadas: {table.grid[fila, col]}")
-    if (table.grid[fila, col] == 5 or table.grid[fila, col] == 6):
+    print(f"Valor en el tablero de la máquina en esas coordenadas: {table[fila, col]}")
+    if (table[fila, col] == 5 or table[fila, col] == 6):
         raise ValueError("Ya disparaste aquí! Introduce otras coordenadas.")
     return fila, col
 
 def comprobar_acierto(table, coordenadas):
     """Comprueba si el disparo del usuario fue un acierto o un fallo"""
     fila, col = coordenadas
-    if table.grid[fila, col] == 0:  # No hay nada (agua)
-        table.grid[fila, col] = 5  # Marcar agua
+    if table[fila, col] == 0:  # No hay nada (agua)
+        table[fila, col] = 5  # Marcar agua
         print("¡Agua!")
         return False  # Pierde el turno
     else:  # Hay barco (1-4)
-        table.grid[fila, col] = 6  # Marcar impacto
+        table[fila, col] = 6  # Marcar impacto
         print("¡Acierto!")
         return True  # Gana otro turno
