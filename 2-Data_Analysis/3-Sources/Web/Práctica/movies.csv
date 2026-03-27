@@ -1,21 +1,21 @@
-title,release_date,genres,adult,vote_average,vote_count,genre_names
-Avatar: Fire and Ash,2025-12-17,"[878, 12, 14]",False,7.266,1916,"Science Fiction, Adventure, Fantasy"
-A Woman Scorned,2025-06-09,[28],False,6.464,14,Action
-Cuerno Azulado,2025-09-10,[28],False,6.706,17,Action
-One Battle After Another,2025-09-23,"[53, 80, 35]",False,7.388,3250,"Thriller, Crime, Comedy"
-A,1965-01-02,[16],False,6.3,37,Animation
-Alpha,2015-01-25,"[27, 18, 9648, 53]",False,5.5,16,"Horror, Drama, Mystery, Thriller"
-And God Said to Cain,1970-02-05,"[37, 27, 9648]",False,6.7,60,"Western, Horror, Mystery"
-Kiss Me Again,2010-01-29,[35],False,5.8,383,Comedy
-The Secret Agent,2025-07-23,"[80, 18, 53]",False,7.346,551,"Crime, Drama, Thriller"
-Agent Zeta,2026-03-20,"[18, 53]",False,6.788,33,"Drama, Thriller"
-Anaconda,2025-12-24,"[12, 35, 27]",False,5.874,827,"Adventure, Comedy, Horror"
-A,2017-09-13,"[18, 10402]",False,6.183,205,"Drama, Music"
-Ghost in the Shell: Stand Alone Complex - Solid State Society,2007-09-01,"[16, 28, 53, 80, 878]",False,7.5,279,"Animation, Action, Thriller, Crime, Science Fiction"
-To Steal from a Thief,2016-03-03,"[80, 53]",False,6.253,386,"Crime, Thriller"
-Dan and Phil's The Amazing Tour is Not on Fire,2016-10-05,[35],False,8.3,3,Comedy
-A,1998-09-09,[99],False,5.9,196,Documentary
-A Father's Miracle,2025-12-25,[18],False,7.838,71,Drama
-Eye for an Eye,2025-07-03,[27],False,5.439,41,Horror
-Alpha,2025-08-20,"[27, 18, 878, 53]",False,6.39,100,"Horror, Drama, Science Fiction, Thriller"
-Murder at the Embassy,2025-11-14,"[9648, 53, 28]",False,5.803,38,"Mystery, Thriller, Action"
+title,release_date,genres,genre_names,adult,vote_average,vote_count
+Avatar: Fire and Ash,2025-12-17,"[878, 12, 14]","Science Fiction, Adventure, Fantasy",False,7.3,1927
+[REC]⁴ Apocalypse,2014-10-31,"[53, 27]","Thriller, Horror",False,5.6,1249
+Agent Zeta,2026-03-20,"[18, 53]","Drama, Thriller",False,6.8,50
+The Adolescent,1979-01-24,[18],Drama,False,4.3,12
+A,1965-01-02,[16],Animation,False,6.3,37
+Lilly Lives Alone,2025-08-22,"[27, 53]","Horror, Thriller",False,6.667,3
+Alpha,2015-01-25,"[27, 18, 9648, 53]","Horror, Drama, Mystery, Thriller",False,5.5,16
+Anaconda,2025-12-24,"[12, 35, 27]","Adventure, Comedy, Horror",False,5.882,842
+A,2017-09-13,"[18, 10402]","Drama, Music",False,6.2,205
+One Battle After Another,2025-09-23,"[53, 80, 35]","Thriller, Crime, Comedy",False,7.392,3270
+A,1998-09-09,[99],Documentary,False,5.9,196
+BTS THE COMEBACK LIVE | ARIRANG,2026-03-21,[10402],Music,False,9.7,41
+The Secret Agent,2025-07-23,"[80, 18, 53]","Crime, Drama, Thriller",False,7.4,558
+The Avengers,2012-04-25,"[878, 28, 12]","Science Fiction, Action, Adventure",False,7.977,36706
+Avengers: Doomsday,2026-12-16,"[878, 28, 12]","Science Fiction, Action, Adventure",False,0.0,0
+Annelie in the Depths of the Night,2004-12-22,"[14, 10751, 16, 18]","Fantasy, Family, Animation, Drama",False,0.0,0
+A...,2013-12-29,[27],Horror,False,6.2,2
+How to Make a Killing,2026-02-19,"[35, 53]","Comedy, Thriller",False,7.045,77
+Abot Langit,2026-03-13,[10749],Romance,False,5.0,1
+Avengers: Infinity War,2018-04-25,"[12, 28, 878]","Adventure, Action, Science Fiction",False,8.234,31639
